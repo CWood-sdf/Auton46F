@@ -84,15 +84,15 @@ var getButtonX = function* (i) {
     for (var x = 1; true; x++) {
         if (i + x * 7 > 90) {
             x = 0;
-            i = 45;
+            i = 43;
         }
         yield i;
     }
 }(5);
 const compile = () => {
-    var ret = `//wc.estimateStartPos(PVector(${pastMvts[0][0].x * FIELD_TO_NORM}, ${-pastMvts[0][0].y * FIELD_TO_NORM}), ${pastMvts[0][1]})\n`;
+    var ret = `wc.estimateStartPos(PVector(${pastMvts[0][0].x * FIELD_TO_NORM}, ${-pastMvts[0][0].y * FIELD_TO_NORM}), ${pastMvts[0][1]});\n`;
     for (var i of program) {
-        ret += i[1];
+        ret += "  " + i[1];
         ret += '\n';
     }
     return ret;
@@ -148,52 +148,6 @@ var initVars = function() {
                 stage = stages["Edit turnTo"];
             }
         ], // turnTo
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "allowOutRings(int)", xOff, 3),
-            function () {
-                
-                var num = $("input.Num").val();
-                var size = num.length;
-                num = parseInt(num, 10);
-                if (num < 0) {
-                    window.alert("Operation Failed because of negative number");
-                }
-                else if (size === 0) {
-                    window.alert("Operation Failed because of no number");
-                }
-                else {
-                    program.push([
-                        cmdType["NonMvt"], `allowOutRings(${num});`
-                    ]);
-                    addListEl(`allowOutRings(${num});`);
-                }
-            }
-        ], // allowOutRings
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "freeConveyer(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `freeConveyer();`
-                ]);
-                addListEl(`freeConveyer();`);
-            }
-        ], // freeConveyer
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "ctrlConveyer(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `ctrlConveyer();`
-                ]);
-                addListEl(`ctrlConveyer();`);
-
-            }
-        ], // ctrlConveyer
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
@@ -305,54 +259,27 @@ var initVars = function() {
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "raiseBackLiftByOne(void) [threaded]", xOff, 3),
-            function () {
-                var c = $("input.Bool").is(":checked");
-                if (c) {
-                    program.push([
-                        cmdType["NonMvt"], `raiseBackLiftByOne();`
-                    ]);
-                    addListEl(`raiseBackLiftByOne();`)
-                } else {
-                    program.push([
-                        cmdType["NonMvt"], `raiseBackLiftByOneWait();`
-                    ]);
-                    addListEl(`raiseBackLiftByOneWait();`);
-                }
-
-            }
-        ], // raiseBackLiftByOne
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "lowerBackLiftByOne(void) [threaded]", xOff, 3),
-            function () {
-                var c = $("input.Bool").is(":checked");
-                if (c) {
-                    program.push([
-                        cmdType["NonMvt"], `lowerBackLiftByOne();`
-                    ]);
-                    addListEl(`lowerBackLiftByOne();`);
-                } else {
-                    program.push([
-                        cmdType["NonMvt"], `lowerBackLiftByOneWait();`
-                    ]);
-                    addListEl(`lowerBackLiftByOneWait();`);
-                }
-
-            }
-        ], // lowerBackLiftByOne
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "waitForBackLiftFinish(void)", xOff, 3),
+                "useLineGoalDetect(void)", xOff, 3),
             function () {
                 program.push([
-                    cmdType["NonMvt"], `waitForBackLiftFinish();`
+                    cmdType["NonMvt"], `useLineGoalDetect();`
                 ]);
-                addListEl(`waitForBackLiftFinish();`);
+                addListEl(`useLineGoalDetect();`);
+
             }
-        ], // waitForBackLiftFinish
+        ], // useLineGoalDetect
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "useLineGoalDetectNoExit(void)", xOff, 3),
+            function () {
+                program.push([
+                    cmdType["NonMvt"], `useLineGoalDetectNoExit();`
+                ]);
+                addListEl(`useLineGoalDetectNoExit();`);
+
+            }
+        ], // useLineGoalDetectNoExit
     ];
     neutralMogos = [
         toGlobalCoord(3, 1.5),
