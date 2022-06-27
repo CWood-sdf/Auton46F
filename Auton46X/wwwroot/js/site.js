@@ -29,6 +29,8 @@ var field = {
     endY: function () { return this.tileWidth * 6 + this.startY },
     size: 0,
 };
+//Converts field inches measurement to pixels
+const inchesToGlobal = v => v / 24 * (field.endX - field.startX) / 6 * height;
 const toGlobalCoord = (x, y) =>
     p.createVector(
         x * (field.endX - field.startX) / 6 + field.startX,
@@ -380,10 +382,6 @@ function drawField() {
     {
         //Basic Field Lines
         for (var i = 0; i < 7; i++) {
-            //Skip the middle
-            if (i == 3) {
-                continue;
-            }
             var base = height * field.startX + height * i * field.tileWidth;
             p.line(base, height * field.startY, base, height * field.endY);
         }
@@ -392,112 +390,171 @@ function drawField() {
             p.line(height * field.startX, base, height * field.endX, base);
         }
         p.strokeWeight(3);
-        var arr = [2, 2.95, 3.05, 4.0];
-        for (var i of arr) {
-            var base = height * field.startX + height * i * field.tileWidth;
-            p.line(base, height * field.startY, base, height * field.endY);
-        }
+        
         var autonLines = [
-            [toGlobalCoord(4, 1), toGlobalCoord(5, 0)],
-            [toGlobalCoord(1, 6), toGlobalCoord(2, 5)],
+            [toGlobalCoord(0, 1), toGlobalCoord(0.5, 1)],
+            [toGlobalCoord(6, 5), toGlobalCoord(5.5, 5)],
+            [toGlobalCoord(2, 0), toGlobalCoord(2, 0.5)],
+            [toGlobalCoord(4, 6), toGlobalCoord(4, 5.5)],
+            [toGlobalCoord(0, 4), toGlobalCoord(1, 4)],
+            [toGlobalCoord(6, 2), toGlobalCoord(5, 2)],
+            [toGlobalCoord(2, 6), toGlobalCoord(2, 5)],
+            [toGlobalCoord(4, 0), toGlobalCoord(4, 1)],
+            [toGlobalCoord(0.05, 0), toGlobalCoord(6, 5.95)],
+            [toGlobalCoord(0, 0.05), toGlobalCoord(5.95, 6)]
         ];
         for (var i of autonLines) {
             p.line(i[0].x * height, i[0].y * height, i[1].x * height, i[1].y * height);
         }
+        
     }
-    //Platforms
+    var vertex = (x, y) => {
+        var pt = toGlobalCoord(x, y);
+        p.vertex(pt.x * height, pt.y * height);
+    };
+    var quadVertex = (x, y, cx, cy) => {
+        var pt = toGlobalCoord(x, y);
+        var pt2 = toGlobalCoord(cx, cy);
+        p.quadraticVertex(pt.x * height, pt.y * height, pt2.x * height, pt2.y * height);
+    }
+    //Barriers
     {
-        var vertex = (x, y) => {
-            var pt = toGlobalCoord(x, y);
-            p.vertex(pt.x * height, pt.y * height);
-        };
-        var quadVertex = (x, y, cx, cy) => {
-            var pt = toGlobalCoord(x, y);
-            var pt2 = toGlobalCoord(cx, cy);
-            p.quadraticVertex(pt.x * height, pt.y * height, pt2.x * height, pt2.y * height);
-        }
         p.noFill();
         p.stroke(MOGO_RED);
-        p.strokeWeight(10);
+        p.strokeWeight(8);
         p.beginShape();
-        vertex(0.1, 2.2);
-        quadVertex(0.1, 2.1, 0.2, 2.1);
-        vertex(0.8, 2.1);
-        quadVertex(0.9, 2.1, 0.9, 2.2);
-        vertex(0.9, 3.8);
-        quadVertex(0.9, 3.9, 0.8, 3.9);
-        vertex(0.2, 3.9);
-        quadVertex(0.1, 3.9, 0.1, 3.8);
-        p.endShape(p.CLOSE);
+        vertex(1, 4);
+        vertex(2, 4);
+        vertex(2, 5);
+        p.endShape();
 
-        p.stroke(MOGO_BLUE);
-        p.strokeWeight(10);
-        p.beginShape();
-        vertex(6 - 0.1, 2.2);
-        quadVertex(6 - 0.1, 2.1, 6 - 0.2, 2.1);
-        vertex(6 - 0.8, 2.1);
-        quadVertex(6 - 0.9, 2.1, 6 - 0.9, 2.2);
-        vertex(6 - 0.9, 3.8);
-        quadVertex(6 - 0.9, 3.9, 6 - 0.8, 3.9);
-        vertex(6 - 0.2, 3.9);
-        quadVertex(6 - 0.1, 3.9, 6 - 0.1, 3.8);
-        p.endShape(p.CLOSE);
-
-
-        p.fill(p.color(255, 255, 255, 80));
-        var start = toGlobalCoord(-0.02, 1.98);
-        var end = toGlobalCoord(1.02, 4.02);
-        p.noStroke();
-        p.rect(start.x * height, start.y * height, (end.x - start.x) * height, (end.y - start.y) * height, 5);
-        var start = toGlobalCoord(6.02, 1.98);
-        var end = toGlobalCoord(6 - 1.02, 4.02);
-        p.noStroke();
-        p.rect(start.x * height, start.y * height, (end.x - start.x) * height, (end.y - start.y) * height, 5);
-    }
-    //Mogos
-    {
-        if (allowGoalsMove) {
-            for (var i of goalBtns) {
-                i.handlePress();
-                if (i.pressing) {
-                    break;
-                }
-            }
-        }
-        for (var i of goalBtns) {
-            i.isDone();
-        }
-        for (var i = 0; i < goalBtns.length; i++) {
-            if (stage != stages["BotPosition"]) {
-                allMogos[i] = goalBtns[i].position();
-            }
-        }
-        for (var i of neutralMogos) {
-            p.fill(MOGO_YELLOW);
-            mobileGoal(allMogos[i].x, allMogos[i].y);
-        }
-        for (var i of redMogos) {
-            p.fill(MOGO_RED);
-            mobileGoal(allMogos[i].x, allMogos[i].y);
-        }
-
-        for (var i of blueMogos) {
-            p.fill(MOGO_BLUE);
-            mobileGoal(allMogos[i].x, allMogos[i].y);
-        }
-    }
-    //Rings
-    {
-        var pt = toGlobalCoord(3 / 24, 0);
-        var w = (pt.x - field.startX) * height;
-
-        p.stroke(RING_PURPLE);
-        p.strokeWeight(1/24*(field.endX - field.startX)/6*height);
         p.noFill();
-        for (var i of rings) {
-            p.ellipse(i.x * height, i.y * height, w, w);
+        p.stroke(MOGO_BLUE);
+        p.strokeWeight(8);
+        p.beginShape();
+        vertex(5, 2);
+        vertex(4, 2);
+        vertex(4, 1);
+        p.endShape();
+    }
+
+    //High Goals
+    {
+
+        var width = inchesToGlobal(15);
+        p.fill(p.red(MOGO_RED), p.green(MOGO_RED), p.blue(MOGO_RED), 150);
+        p.stroke(MOGO_RED);
+        p.strokeWeight(5);
+        var pos = toGlobalCoord(6 - 0.92, 0.92);
+        p.ellipse(pos.x * height, pos.y * height, width);
+        p.fill(p.red(MOGO_BLUE), p.green(MOGO_BLUE), p.blue(MOGO_BLUE), 150);
+        p.stroke(MOGO_BLUE);
+        p.strokeWeight(5);
+        var pos = toGlobalCoord(0.92, 6 - 0.92);
+        p.ellipse(pos.x * height, pos.y * height, width);
+    }
+
+    //Loaders
+    {
+        var posLeft = toGlobalCoord(0, 3);
+        p.noStroke();
+        p.fill(180, 180, 180);
+        p.beginShape();
+        p.vertex(posLeft.x * height, (posLeft.y + 2) * height);
+        p.vertex((posLeft.x - 3) * height, (posLeft.y + 3) * height);
+        p.vertex((posLeft.x - 3) * height, (posLeft.y - 3) * height);
+        p.vertex(posLeft.x * height, (posLeft.y - 2) * height);
+        p.vertex(posLeft.x * height, (posLeft.y + 2) * height);
+        p.endShape(p.CLOSE);
+
+        var posRight = toGlobalCoord(6, 3);
+        p.noStroke();
+        p.fill(180, 180, 180);
+        p.beginShape();
+        p.vertex(posRight.x * height, (posRight.y + 2) * height);
+        p.vertex((posRight.x + 3) * height, (posRight.y + 3) * height);
+        p.vertex((posRight.x + 3) * height, (posRight.y - 3) * height);
+        p.vertex(posRight.x * height, (posRight.y - 2) * height);
+        p.vertex(posRight.x * height, (posRight.y + 2) * height);
+        p.endShape(p.CLOSE);
+
+    }
+
+    //Disks
+    {
+        var diskPos = [
+            tgc(1.5, 2.5),
+            tgc(4.5, 3.5)
+        ];
+        for (var v = 0.5; v < 6; v += 0.5) {
+            if (v > 2 && v < 4) {
+                diskPos.push(tgc(v, v - 1));
+                diskPos.push(tgc(v, v + 1));
+            }
+            //No disks in center
+            if (v === 3) { continue; }
+            diskPos.push(tgc(v, v));
+        }
+        for (var v = 1 + 5.5 / 48; v <= 2 - 5.5 / 48; v += (1 - 5.5 / 24) / 2) {
+            var n = 6.6 / 48;
+            diskPos.push(tgc(v, 4 - n));
+            diskPos.push(tgc(v + 3, 2 + n));
+            diskPos.push(tgc(2 + n, v + 3));
+            diskPos.push(tgc(4 - n, v));
+        }
+        var diskWidth = inchesToGlobal(5.5);
+        var col = MOGO_YELLOW;
+        p.noStroke();
+        p.fill(col);
+        for (var pos of diskPos) {
+            p.ellipse(pos.x * height, pos.y * height, diskWidth);
         }
     }
+
+    //Rollers
+    {
+        p.noStroke();
+        var blackWidth = inchesToGlobal(1.675);
+        var rollerWidth = inchesToGlobal(9.8);
+        var rollerHeight = inchesToGlobal(2.4) / 2;
+        //Top left
+        var pos = tgc(0, 1);
+        p.fill(MOGO_BLUE);
+        p.rect(pos.x * height, pos.y * height + blackWidth, rollerHeight, rollerWidth);
+        p.fill(MOGO_RED);
+        p.rect(pos.x * height + rollerHeight, pos.y * height + blackWidth, rollerHeight, rollerWidth);
+        p.fill(0);
+        p.rect(pos.x * height, pos.y * height, rollerHeight * 2, blackWidth);
+        p.rect(pos.x * height, pos.y * height + rollerWidth + blackWidth, rollerHeight * 2, blackWidth);
+        //Top right
+        pos = tgc(1, 0);
+        p.fill(MOGO_BLUE);
+        p.rect(pos.x * height + blackWidth, pos.y * height + rollerHeight, rollerWidth, rollerHeight);
+        p.fill(MOGO_RED);
+        p.rect(pos.x * height + blackWidth, pos.y * height, rollerWidth, rollerHeight);
+        p.fill(0);
+        p.rect(pos.x * height, pos.y * height, blackWidth, rollerHeight * 2);
+        p.rect(pos.x * height + rollerWidth + blackWidth, pos.y * height, blackWidth, rollerHeight * 2);
+        //Btm right
+        var pos = tgc(6, 5);
+        p.fill(MOGO_BLUE);
+        p.rect(pos.x * height - rollerHeight * 2, pos.y * height - blackWidth - rollerWidth, rollerHeight, rollerWidth);
+        p.fill(MOGO_RED);
+        p.rect(pos.x * height - rollerHeight, pos.y * height - blackWidth - rollerWidth, rollerHeight, rollerWidth);
+        p.fill(0);
+        p.rect(pos.x * height - rollerHeight * 2, pos.y * height - blackWidth * 2 - rollerWidth, rollerHeight * 2, blackWidth);
+        p.rect(pos.x * height - rollerHeight * 2, pos.y * height - blackWidth, rollerHeight * 2, blackWidth);
+        //Btm left
+        pos = tgc(5, 6);
+        p.fill(MOGO_BLUE);
+        p.rect(pos.x * height - blackWidth - rollerWidth, pos.y * height - rollerHeight, rollerWidth, rollerHeight);
+        p.fill(MOGO_RED);
+        p.rect(pos.x * height - blackWidth - rollerWidth, pos.y * height - 2 * rollerHeight, rollerWidth, rollerHeight);
+        p.fill(0);
+        p.rect(pos.x * height - blackWidth, pos.y * height - rollerHeight * 2, blackWidth, rollerHeight * 2);
+        p.rect(pos.x * height - rollerWidth - 2 * blackWidth, pos.y * height - rollerHeight * 2, blackWidth, rollerHeight * 2);
+    }
+    
     //Robot
     {
         drawBot(botPos, botAngle, 255);
