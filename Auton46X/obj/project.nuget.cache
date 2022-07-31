@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "VK/MXRBptEZE2Kmt1JFc02ZEnQmu9STOTCqBIIQBy4Ips8lZA4rV++ZAIzxkTA6fFHGa/yh+tN/4c6PlQGqTcQ==",
+  "dgSpecHash": "av/CxeqnUknkleA1koyysrs/C25VQkjZM0s8/RjZxfj4iLVIh10TG9Ms+NpddvkwOIt6fmrzZLOQMmpV7oFXCQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\woodc\\source\\VEX CODE\\Auton46X\\Auton46X\\Auton46X.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\woodc\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.27\\microsoft.netcore.app.host.win-x64.3.1.27.nupkg.sha512",
+    "C:\\Users\\woodc\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\woodc\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\woodc\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
+  ],
   "logs": []
 }
