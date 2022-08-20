@@ -110,7 +110,7 @@ var initVars = function() {
     //  y dist to GPS from top left(in) / 24
     GPS_POS = p.createVector(-0.0 / 24.0, -0.0 / 24.0);
     angleToGps = GPS_POS.heading();
-    GPS_TOP_LEFT = p.createVector(-9.0 / 24.0, -9.0 / 24.0);
+    GPS_TOP_LEFT = p.createVector(-6.5 / 24.0, -6.5 / 24.0);
     GPS_TOP_LEFT.sub(GPS_POS);
     mogoWidth = field.size / 24;
     var xOff = 1.5;
@@ -153,135 +153,146 @@ var initVars = function() {
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "raiseLiftByOne(void) [threaded]", xOff, 3),
+                "spinRoller(void)", xOff, 3),
             function () {
-                var c = $("input.Bool").is(":checked");
-                if (c) {
-                    program.push([
-                        cmdType["NonMvt"], `raiseLiftByOne();`
-                    ]);
-                    addListEl(`raiseLiftByOne();`)
-                } else {
-                    program.push([
-                        cmdType["NonMvt"], `raiseLiftByOneWait();`
-                    ]);
-                    addListEl(`raiseLiftByOneWait();`);
-                }
+                program.push([
+                    cmdType["NonMvt"], `spinRoller();`
+                ]);
+                addListEl(`spinRoller();`);
+            }
+        ], // spinRoller
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "raiseLiftByOne(void) [threaded]", xOff, 3),
+        //    function () {
+        //        var c = $("input.Bool").is(":checked");
+        //        if (c) {
+        //            program.push([
+        //                cmdType["NonMvt"], `raiseLiftByOne();`
+        //            ]);
+        //            addListEl(`raiseLiftByOne();`)
+        //        } else {
+        //            program.push([
+        //                cmdType["NonMvt"], `raiseLiftByOneWait();`
+        //            ]);
+        //            addListEl(`raiseLiftByOneWait();`);
+        //        }
 
-            }
-        ], // raiseLiftByOne
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "lowerLiftByOne(void) [threaded]", xOff, 3),
-            function () {
-                var c = $("input.Bool").is(":checked");
-                if (c) {
-                    program.push([
-                        cmdType["NonMvt"], `lowerLiftByOne();`
-                    ]);
-                    addListEl(`lowerLiftByOne();`);
-                } else {
-                    program.push([
-                        cmdType["NonMvt"], `lowerLiftByOneWait();`
-                    ]);
-                    addListEl(`lowerLiftByOneWait();`);
-                }
+        //    }
+        //], // raiseLiftByOne
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "lowerLiftByOne(void) [threaded]", xOff, 3),
+        //    function () {
+        //        var c = $("input.Bool").is(":checked");
+        //        if (c) {
+        //            program.push([
+        //                cmdType["NonMvt"], `lowerLiftByOne();`
+        //            ]);
+        //            addListEl(`lowerLiftByOne();`);
+        //        } else {
+        //            program.push([
+        //                cmdType["NonMvt"], `lowerLiftByOneWait();`
+        //            ]);
+        //            addListEl(`lowerLiftByOneWait();`);
+        //        }
 
-            }
-        ], // lowerLiftByOne
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "waitForLiftFinish(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `waitForLiftFinish();`
-                ]);
-                addListEl(`waitForLiftFinish();`);
-            }
-        ], // waitForLiftFinish
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "clipGoal(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `clipGoal();`
-                ]);
-                addListEl('clipGoal();');
-            }
-        ], // clipGoal
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "unclipGoal(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `unclipGoal();`
-                ]);
-                addListEl(`unclipGoal();`);
-            }
-        ], // unclipGoal
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "balanceBot(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `balanceBot();`
-                ]);
-                addListEl(`balanceBot();`);
+        //    }
+        //], // lowerLiftByOne
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "waitForLiftFinish(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `waitForLiftFinish();`
+        //        ]);
+        //        addListEl(`waitForLiftFinish();`);
+        //    }
+        //], // waitForLiftFinish
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "clipGoal(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `clipGoal();`
+        //        ]);
+        //        addListEl('clipGoal();');
+        //    }
+        //], // clipGoal
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "unclipGoal(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `unclipGoal();`
+        //        ]);
+        //        addListEl(`unclipGoal();`);
+        //    }
+        //], // unclipGoal
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "balanceBot(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `balanceBot();`
+        //        ]);
+        //        addListEl(`balanceBot();`);
 
-            }
-        ], // balanceBot
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "clipLiftGoal(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `clipLiftGoal();`
-                ]);
-                addListEl(`clipLiftGoal();`);
-            }
-        ], // clipLiftGoal
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "unclipLiftGoal(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `unclipLiftGoal();`
-                ]);
-                addListEl(`unclipLiftGoal();`);
+        //    }
+        //], // balanceBot
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "clipLiftGoal(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `clipLiftGoal();`
+        //        ]);
+        //        addListEl(`clipLiftGoal();`);
+        //    }
+        //], // clipLiftGoal
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "unclipLiftGoal(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `unclipLiftGoal();`
+        //        ]);
+        //        addListEl(`unclipLiftGoal();`);
 
-            }
-        ], // unclipLiftGoal
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "useLineGoalDetect(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `useLineGoalDetect();`
-                ]);
-                addListEl(`useLineGoalDetect();`);
+        //    }
+        //], // unclipLiftGoal
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "useLineGoalDetect(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `useLineGoalDetect();`
+        //        ]);
+        //        addListEl(`useLineGoalDetect();`);
 
-            }
-        ], // useLineGoalDetect
-        [
-            new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "useLineGoalDetectNoExit(void)", xOff, 3),
-            function () {
-                program.push([
-                    cmdType["NonMvt"], `useLineGoalDetectNoExit();`
-                ]);
-                addListEl(`useLineGoalDetectNoExit();`);
+        //    }
+        //], // useLineGoalDetect
+        //[
+        //    new Button(
+        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+        //        "useLineGoalDetectNoExit(void)", xOff, 3),
+        //    function () {
+        //        program.push([
+        //            cmdType["NonMvt"], `useLineGoalDetectNoExit();`
+        //        ]);
+        //        addListEl(`useLineGoalDetectNoExit();`);
 
-            }
-        ], // useLineGoalDetectNoExit
+        //    }
+        //], // useLineGoalDetectNoExit
     ];
     neutralMogos = [
         toGlobalCoord(3, 1.5),
@@ -296,17 +307,38 @@ var initVars = function() {
         toGlobalCoord(1.5, 5.5),
         toGlobalCoord(0.5, 1.75)
     ];
-    for (var i = 0; i < neutralMogos.length; i++) {
-        allMogos.push(neutralMogos[i]);
-        neutralMogos[i] = allMogos.length - 1;
+
+
+    diskPos = [
+        tgc(1.5, 2.5),
+        tgc(4.5, 3.5),
+        tgc(1.5, 2.5),
+        tgc(4.5, 3.5),
+        tgc(1.5, 2.5),
+        tgc(4.5, 3.5)
+    ];
+    for (var i = 0; i < 22; i++) {
+        diskPos.push(tgc(0 + i / 22 * 6, -0.13));
     }
-    for (var i = 0; i < blueMogos.length; i++) {
-        allMogos.push(blueMogos[i]);
-        blueMogos[i] = allMogos.length - 1;
+    for (var v = 0.5; v < 6; v += 0.5) {
+        if (v > 2 && v < 4) {
+            diskPos.push(tgc(v, v - 1));
+            diskPos.push(tgc(v, v + 1));
+        }
+        if (v === 1.5 || v == 4.5) {
+            diskPos.push(tgc(v, v));
+            diskPos.push(tgc(v, v));
+        }
+        //No disks in center
+        if (v === 3) { continue; }
+        diskPos.push(tgc(v, v));
     }
-    for (var i = 0; i < redMogos.length; i++) {
-        allMogos.push(redMogos[i]);
-        redMogos[i] = allMogos.length - 1;
+    for (var v = 1 + 5.5 / 48; v <= 2 - 5.5 / 48; v += (1 - 5.5 / 24) / 2) {
+        var n = 6.6 / 48;
+        diskPos.push(tgc(v, 4 - n));
+        diskPos.push(tgc(v + 3, 2 + n));
+        diskPos.push(tgc(2 + n, v + 3));
+        diskPos.push(tgc(4 - n, v));
     }
     MOGO_YELLOW = p.color(255, 255, 0);
     MOGO_RED = p.color(255, 0, 0);
@@ -318,37 +350,29 @@ var initVars = function() {
     botPos = p.createVector(0, 0);
     botAngle = 30;
     initVars = () => { };
-    RING_PURPLE = p.color(255, 0, 255);
-    rings = [
-        tgc(3, 2), tgc(3, 2.24), tgc(3, 2.48),
-        tgc(3, 6 - 2), tgc(3, 6 - 2.24), tgc(3, 6 - 2.48),
-        tgc(3, 5), tgc(3, 5.24), tgc(3, 5.48), tgc(3, 5.72), 
-        tgc(3, 1), tgc(3, 6 - 5.24), tgc(3, 6 - 5.48), tgc(3, 6 - 5.72),
-        tgc(2, 5), tgc(2.24, 5), tgc(2.48, 5), tgc(2.72, 5),
-        tgc(6 - 2, 1), tgc(6 - 2.24, 1), tgc(6 - 2.48, 1), tgc(6 - 2.72, 1),
-        tgc(2, 3), tgc(2.16, 3), tgc(2, 3.16), tgc(1.84, 3), tgc(2, 2.84), 
-        tgc(6 - 2, 3), tgc(6 - 2.16, 3), tgc(6 - 2, 3.16), tgc(6 - 1.84, 3), tgc(6 - 2, 2.84), 
-        tgc(2, 2), tgc(2.16, 2), tgc(2, 2.16), tgc(1.84, 2), tgc(2, 1.84), 
-        tgc(4, 4), tgc(6 - 2.16, 4), tgc(4, 6 - 2.16), tgc(6 - 1.84, 4), tgc(4, 6 - 1.84), 
-    ];
-    for (var i of allMogos) {
+    for (var i of diskPos) {
+        var diskWidth = inchesToGlobal(DISK_WIDTH) / height;
         goalBtns.push(new MovingButton(
-            i.x - mogoWidth, i.y - mogoWidth, mogoWidth * 2, mogoWidth * 2,
+            i.x - diskWidth / 2, i.y - diskWidth / 2, diskWidth, diskWidth,
             p.color(0), p.color(0), p.color(0), p.color(0),
             "", 0, 0)
         );
     }
 }
+var diskPos;
+const DISK_WIDTH = 5.5;
 function drawBot(pt, r, t) {
     var upperLeftCorner = GPS_TOP_LEFT.copy();
-    var upperRightCorner = p.createVector(upperLeftCorner.x + 0.75, upperLeftCorner.y);
-    var btmLeftCorner = p.createVector(upperLeftCorner.x, upperLeftCorner.y + 0.75);
-    var btmRightCorner = p.createVector(upperLeftCorner.x + 0.75, upperLeftCorner.y + 0.75);
-    var innerLeft = p.createVector(upperLeftCorner.x + 3.5 / 24, upperLeftCorner.y + 0.75 - 3 / 24);
-    var innerRight = p.createVector(upperLeftCorner.x + 0.75 - 3.5 / 24, upperLeftCorner.y + 0.75 - 3 / 24);
-    var outerLeft = p.createVector(upperLeftCorner.x + 3.5 / 24, upperLeftCorner.y + 0.75);
-    var outerRight = p.createVector(upperLeftCorner.x + 0.75 - 3.5 / 24, upperLeftCorner.y + 0.75);
-    var arr = [upperRightCorner, btmRightCorner, outerRight, innerRight, innerLeft, outerLeft, btmLeftCorner, upperLeftCorner];
+    var botWidth = 13.5 / 24;
+    var botHeight = 14 / 24;
+    var upperRightCorner = p.createVector(upperLeftCorner.x + botWidth, upperLeftCorner.y);
+    var btmLeftCorner = p.createVector(upperLeftCorner.x, upperLeftCorner.y + botHeight);
+    var btmRightCorner = p.createVector(upperLeftCorner.x + botWidth, upperLeftCorner.y + botHeight);
+    //var innerLeft = p.createVector(upperLeftCorner.x + 3.5 / 24, upperLeftCorner.y + botHeight - 3 / 24);
+    //var innerRight = p.createVector(upperLeftCorner.x + botWidth - 3.5 / 24, upperLeftCorner.y + botHeight - 3 / 24);
+    //var outerLeft = p.createVector(upperLeftCorner.x + 3.5 / 24, upperLeftCorner.y + botHeight);
+    //var outerRight = p.createVector(upperLeftCorner.x + botWidth - 3.5 / 24, upperLeftCorner.y + botHeight);
+    var arr = [upperRightCorner, btmRightCorner/*, outerRight, innerRight, innerLeft, outerLeft*/, btmLeftCorner, upperLeftCorner];
 
     var pos = p5.Vector.add(pt, [3, 3]);
     for (var i of arr) {
@@ -358,6 +382,8 @@ function drawBot(pt, r, t) {
     for (var i = 0; i < arr.length; i++) {
         arr[i] = toGlobalCoordV(arr[i]);
     }
+
+
     upperLeftCorner = toGlobalCoordV(upperLeftCorner);
     upperRightCorner = toGlobalCoordV(upperRightCorner);
     btmLeftCorner = toGlobalCoordV(btmLeftCorner);
@@ -482,27 +508,23 @@ function drawField() {
 
     //Disks
     {
-        var diskPos = [
-            tgc(1.5, 2.5),
-            tgc(4.5, 3.5)
-        ];
-        for (var v = 0.5; v < 6; v += 0.5) {
-            if (v > 2 && v < 4) {
-                diskPos.push(tgc(v, v - 1));
-                diskPos.push(tgc(v, v + 1));
+        if (allowGoalsMove) {
+            for (var btn of goalBtns) {
+                btn.handlePress();
+                if (btn.pressing) {
+                    break;
+                }
             }
-            //No disks in center
-            if (v === 3) { continue; }
-            diskPos.push(tgc(v, v));
         }
-        for (var v = 1 + 5.5 / 48; v <= 2 - 5.5 / 48; v += (1 - 5.5 / 24) / 2) {
-            var n = 6.6 / 48;
-            diskPos.push(tgc(v, 4 - n));
-            diskPos.push(tgc(v + 3, 2 + n));
-            diskPos.push(tgc(2 + n, v + 3));
-            diskPos.push(tgc(4 - n, v));
+        for (var btn of goalBtns) {
+            btn.isDone();
         }
-        var diskWidth = inchesToGlobal(5.5);
+        if (stage === stages["Programming"]) {
+            for (var i = 0; i < goalBtns.length; i++) {
+                diskPos[i] = goalBtns[i].position();
+            }
+        }
+        var diskWidth = inchesToGlobal(DISK_WIDTH);
         var col = MOGO_YELLOW;
         p.noStroke();
         p.fill(col);
@@ -642,7 +664,17 @@ const s = pi => {
         5, 90, 17, 8, p.color(0, 0, 0), p.color(255, 0, 0), p.color(230, 0, 0), p.color(200, 0, 0),
         "Delete", 2.5, 5.5
     );
+    var algorithmChange = new Button(
+        120, 70, 17, 8, p.color(0, 0, 0), p.color(0, 0, 255), p.color(0, 0, 230), p.color(0, 0, 200),
+        "", 2.5, 5.5);
     var turnToAngle = basicMoving();
+    var driveAlgorithm = 0;
+    var algorithms = ["Pure Pursuit", "Ramsete", "Basic PID"];
+    var algToVar = {
+        "Pure Pursuit": "&purePursuit",
+        "Ramsete": "&ramsete",
+        "Basic PID": "&pidController"
+    };
     pi.draw = function () {
         if (stage !== 0) {
             drawField();
@@ -756,6 +788,17 @@ const s = pi => {
                         break;
                     }
                 }
+                algorithmChange.handlePress();
+                if (algorithmChange.isDone()) {
+                    var msg = algorithms[driveAlgorithm++];
+                    if (msg === undefined) {
+                        driveAlgorithm = 0;
+                        msg = algorithms[driveAlgorithm++];
+                    }
+                    algorithmChange.msg = msg;
+                }
+                algorithmChange.draw();
+                
                 for (var i of pathBtnArr) {
                     i.isDone();
                 } 
@@ -799,11 +842,12 @@ const s = pi => {
                         str += `PVector(${limDecimal(i.x * FIELD_TO_NORM)}, ${-limDecimal(i.y * FIELD_TO_NORM)}), `;
                     }
                     str = str.substring(0, str.length - 2);
+                    
                     program.push([
                         cmdType["Mvt"],
-                        `wc.followPath({${str}});`
+                        `wc.followPath(${algToVar[algorithmChange.msg || "Pure Pursuit"]}, {${str}});`
                     ]);
-                    addListEl(`wc.followPath({${str}});`);
+                    addListEl(`wc.followPath(${algToVar[algorithmChange.msg || "Pure Pursuit"]}, {${str}});`);
                     botPos = fieldPos;
                     botAngle = angle;
                 }
@@ -826,6 +870,16 @@ const s = pi => {
                     i.isDone();
                 }
 
+                algorithmChange.handlePress();
+                if (algorithmChange.isDone()) {
+                    var msg = algorithms[driveAlgorithm++];
+                    if (msg === undefined) {
+                        driveAlgorithm = 0;
+                        msg = algorithms[driveAlgorithm++];
+                    }
+                    algorithmChange.msg = msg;
+                }
+                algorithmChange.draw();
                 var pos = new VectorArr([botPos]);
                 for (var i of pathBtnArr) {
                     var fieldPos = toFieldCoordV(i.position());
@@ -867,9 +921,9 @@ const s = pi => {
                     str = str.substring(0, str.length - 2);
                     program.push([
                         cmdType["Mvt"],
-                        `wc.backwardsFollow({${str}});`
+                        `wc.backwardsFollow(${algToVar[algorithmChange.msg ?? "Pure Pursuit"]}, {${str}});`
                     ]);
-                    addListEl(`wc.backwardsFollow({${str}});`);
+                    addListEl(`wc.backwardsFollow(${algToVar[algorithmChange.msg ?? "Pure Pursuit"]}, {${str}});`);
                     botPos = fieldPos;
                     botAngle = angle;
                 }
