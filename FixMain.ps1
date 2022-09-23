@@ -1,4 +1,28 @@
+"dotnet build" | cmd.exe
+"md sdsdd" | cmd.exe
+
+$Runspace = [runspacefactory]::CreateRunspace()
+$PowerShell = [powershell]::Create()
+$PowerShell.Runspace = $Runspace
+$Runspace.Open()
+$PowerShell.AddScript({ "dotnet run --project Auton46X" | cmd.exe })
+$PowerShell.BeginInvoke()
+Start-Sleep -Seconds 1
+
 $uri = "https://localhost:5001"
+$success = 0
+$webreq
+Write-Output "Waiting for server to start..."
+while($success -eq 0) {
+    try {
+        $webreq = Invoke-WebRequest -Uri $uri
+        $success = 1
+    }
+    catch {
+        Start-Sleep -Seconds 1
+        Write-Output "Waiting for server to start..."
+    }
+}
 $webreq = Invoke-WebRequest -Uri $uri
 $webreq.Content | Out-File -FilePath index.html
 $mainPage = Get-Content index.html

@@ -526,7 +526,8 @@ function drawField() {
         }
         var diskWidth = inchesToGlobal(DISK_WIDTH);
         var col = MOGO_YELLOW;
-        p.noStroke();
+        p.stroke(0);
+        p.strokeWeight(1);
         p.fill(col);
         for (var pos of diskPos) {
             p.ellipse(pos.x * height, pos.y * height, diskWidth);
