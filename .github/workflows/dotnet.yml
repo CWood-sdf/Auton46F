@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run
-      run: dotnet run --project ${{ github.event.repository.name }}
+      run: dotnet run --project Auton46X
     - name: Deploy index.html
       run: powershell .\FixMain.ps1
     - name: Test
