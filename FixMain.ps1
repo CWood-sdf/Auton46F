@@ -1,12 +1,11 @@
 "dotnet build" | cmd.exe
-"md sdsdd" | cmd.exe
 
 $Runspace = [runspacefactory]::CreateRunspace()
 $PowerShell = [powershell]::Create()
 $PowerShell.Runspace = $Runspace
 $Runspace.Open()
 $PowerShell.AddScript({ "dotnet run --project Auton46X" | cmd.exe })
-$PowerShell.BeginInvoke()
+$invoke = $PowerShell.BeginInvoke()
 Start-Sleep -Seconds 1
 
 $uri = "https://localhost:5001"
@@ -67,4 +66,5 @@ ForEach ($line in $($mainPage -split "`r`n")) {
         $newPage += $line + "`r`n"
     }
 }
+
 $newPage | Out-File -FilePath index.html
