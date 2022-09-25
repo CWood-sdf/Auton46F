@@ -36,6 +36,19 @@
                 "${workspaceFolder}/Auton46X/Auton46X.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "CompileToHtml",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                ".\\FixMain.ps1"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         }
     ]
 }

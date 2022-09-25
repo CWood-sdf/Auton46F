@@ -6,20 +6,21 @@ $PowerShell.Runspace = $Runspace
 $Runspace.Open()
 $PowerShell.AddScript({ "dotnet run --project Auton46X" | cmd.exe })
 $invoke = $PowerShell.BeginInvoke()
-Start-Sleep -Seconds 1
+# Start-Sleep -Seconds 1
 
 $uri = "https://localhost:5001"
 $success = 0
 $webreq
-Write-Output "Waiting for server to start..."
+# Write-Output "Waiting for server to start..."
 while($success -eq 0) {
     try {
         $webreq = Invoke-WebRequest -Uri $uri
         $success = 1
     }
     catch {
-        Start-Sleep -Seconds 1
         Write-Output "Waiting for server to start..."
+        Start-Sleep -Seconds 1
+        
     }
 }
 $webreq = Invoke-WebRequest -Uri $uri
@@ -67,4 +68,6 @@ ForEach ($line in $($mainPage -split "`r`n")) {
     }
 }
 
+Write-Output "Writing to file"
 $newPage | Out-File -FilePath index.html
+Write-Output "Done"
