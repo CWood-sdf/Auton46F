@@ -153,6 +153,14 @@ var initVars = function() {
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "faceTarget(PVector)", xOff, 3),
+            function () {
+                stage = stages["Edit faceTarget"];
+            }
+        ], // faceTarget
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
                 "spinRoller(void)", xOff, 3),
             function () {
                 program.push([
@@ -974,6 +982,52 @@ const s = pi => {
                         `wc.turnTo(${limDecimal(angle)});`
                     ]);
                     addListEl(`wc.turnTo(${limDecimal(angle)});`);
+                    botAngle = angle;
+                    botPos = botCenter;
+                }
+                break;
+            case stages["Edit faceTarget"]:
+                turnToAngle.handlePress();
+                allowGoalsMove = true;
+                if (turnToAngle.pressing) {
+                    allowGoalsMove = false;
+                }
+                turnToAngle.isDone();
+                var fieldPos = toFieldCoordV(turnToAngle.position());
+                fieldPos.sub(3, 3);
+                
+                p.stroke(255, 255, 0, 200);
+                p.strokeWeight(1);
+                var botCenter = GPS_POS.copy();
+                botCenter.mult(-1);
+                botCenter.rotate(botAngle * p.PI / 180.0);
+                botCenter.add(botPos);
+                
+                var fieldCoord = toGlobalCoordV(p5.Vector.add(fieldPos, p.createVector(3, 3)));
+                var botCoord = toGlobalCoordV(p5.Vector.add(botCenter, p.createVector(3, 3)));
+                var newGps = GPS_POS.copy();
+                var angle = botCenter.angleTo(fieldPos) * 360 / p.TWO_PI + 90;
+                newGps.rotate(angle * p.PI / 180.0);
+                botCenter.add(newGps);
+                p.line(fieldCoord.x * height, fieldCoord.y * height, botCoord.x * height, botCoord.y * height);
+                fakeBot(botCenter, angle);
+                p.textSize(2.5 * height);
+                turnToAngle.draw();
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.faceTarget({${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${limDecimal(fieldPos.y * -FIELD_TO_NORM)}});`
+                    ]);
+                    addListEl(`wc.faceTarget({${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${limDecimal(fieldPos.y * -FIELD_TO_NORM)}});`);
                     botAngle = angle;
                     botPos = botCenter;
                 }

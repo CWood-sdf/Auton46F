@@ -5,7 +5,7 @@ $PowerShell = [powershell]::Create()
 $PowerShell.Runspace = $Runspace
 $Runspace.Open()
 $PowerShell.AddScript({ "dotnet run --project Auton46X" | cmd.exe })
-$invoke = $PowerShell.BeginInvoke()
+# $invoke = $PowerShell.BeginInvoke()
 # Start-Sleep -Seconds 1
 
 $uri = "https://localhost:5001"

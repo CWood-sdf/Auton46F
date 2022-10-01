@@ -2,6 +2,17 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "run",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--project",
+                "Auton46X"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "build",
             "command": "dotnet",
             "type": "process",
@@ -38,6 +49,15 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "buildRun",
+            "dependsOn": [
+                "build",
+                "run"
+            ],
+            "problemMatcher": [],
+            "dependsOrder": "sequence"
+        },
+        {
             "label": "CompileToHtml",
             "type": "process",
             "command": "powershell",
@@ -48,6 +68,14 @@
                 "reveal": "always",
                 "panel": "new"
             },
+            "problemMatcher": []
+        },
+        {
+            "label": "fullCompile",
+            "dependsOn": [
+                "run",
+                "CompileToHtml"
+            ],
             "problemMatcher": []
         }
     ]
