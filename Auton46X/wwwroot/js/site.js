@@ -705,7 +705,7 @@ const s = pi => {
                 botAngle = angleSlide.getVal();
                 p.textSize(2.5 * height);
                 p.fill(255, 255, 255);
-                p.text(`Bot Angle: ${botAngle}`, (angleSlide.x + angleSlide.w + 5) * height, (angleSlide.y + angleSlide.h) * height);
+                p.text(`Bot Angle: ${Math.round(botAngle)}`, (angleSlide.x + angleSlide.w + 5) * height, (angleSlide.y + angleSlide.h) * height);
                 toNextBtn.handlePress();
                 p.textSize(2.5 * height);
                 toNextBtn.draw();
