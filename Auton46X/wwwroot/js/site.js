@@ -326,7 +326,7 @@ var initVars = function() {
         tgc(4.5, 3.5)
     ];
     for (var i = 0; i < 22; i++) {
-        diskPos.push(tgc(0 + i / 22 * 6, -0.13));
+        diskPos.push(tgc(0 + i / 21 * 6, -0.13));
     }
     for (var v = 0.5; v < 6; v += 0.5) {
         if (v > 2 && v < 4) {

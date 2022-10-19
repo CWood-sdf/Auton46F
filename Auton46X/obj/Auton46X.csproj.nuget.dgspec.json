@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\woodc\\AutonSite\\Auton46X-Actual\\Auton46X\\Auton46X.csproj": {}
+    "C:\\Users\\woodc\\Auton46F\\Auton46X\\Auton46X.csproj": {}
   },
   "projects": {
-    "C:\\Users\\woodc\\AutonSite\\Auton46X-Actual\\Auton46X\\Auton46X.csproj": {
+    "C:\\Users\\woodc\\Auton46F\\Auton46X\\Auton46X.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\woodc\\AutonSite\\Auton46X-Actual\\Auton46X\\Auton46X.csproj",
+        "projectUniqueName": "C:\\Users\\woodc\\Auton46F\\Auton46X\\Auton46X.csproj",
         "projectName": "Auton46X",
-        "projectPath": "C:\\Users\\woodc\\AutonSite\\Auton46X-Actual\\Auton46X\\Auton46X.csproj",
+        "projectPath": "C:\\Users\\woodc\\Auton46F\\Auton46X\\Auton46X.csproj",
         "packagesPath": "C:\\Users\\woodc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\woodc\\AutonSite\\Auton46X-Actual\\Auton46X\\obj\\",
+        "outputPath": "C:\\Users\\woodc\\Auton46F\\Auton46X\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\woodc\\AppData\\Roaming\\NuGet\\NuGet.Config",
