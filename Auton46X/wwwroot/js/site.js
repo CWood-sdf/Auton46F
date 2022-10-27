@@ -92,7 +92,7 @@ var getButtonX = function* (i) {
     }
 }(5);
 const compile = () => {
-    var ret = `wc.estimateStartPos(PVector(${pastMvts[0][0].x * FIELD_TO_NORM}, ${-pastMvts[0][0].y * FIELD_TO_NORM}), ${pastMvts[0][1]});\n`;
+    var ret = `wc.estimateStartPos(PVector(${limDecimal(pastMvts[0][0].x * FIELD_TO_NORM)}, ${limDecimal(-pastMvts[0][0].y * FIELD_TO_NORM)}), ${limDecimal(pastMvts[0][1])});\n`;
     for (var i of program) {
         ret += "  " + i[1];
         ret += '\n';
@@ -621,16 +621,17 @@ function programmingBank() {
         }
     }
 }
-function limDecimal(num) {
+function limDecimal(num, maxCount) {
     var str = `${num}`;
     var ret = '';
-    var count = 0;
+    var count = 0
+    maxCount ??= 2;
     var willCount = false;
     for (var i of str) {
         ret += i;
         if (willCount) {
             count++;
-            if (count >= 2) {
+            if (count >= maxCount) {
                 break;
             }
         }
@@ -710,6 +711,7 @@ const s = pi => {
                 p.textSize(2.5 * height);
                 toNextBtn.draw();
                 if (toNextBtn.isDone()) {
+                    debugger;
                     $("ul").append(`<li>[${limDecimal(botPos.x)}, ${limDecimal(botPos.y)}], ${limDecimal(botAngle)}</li>`);
                     allowGoalsMove = true;
                     $(".ProgInput").show();
