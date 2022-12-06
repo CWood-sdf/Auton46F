@@ -14,7 +14,22 @@ const basicMoving = () =>
         50, 50, 2, 2, p.color(0, 0, 0), p.color(250, 250, 0), p.color(230, 230, 0), p.color(210, 210, 0),
         "", 0, 0
     )
-;
+    ;
+$("button.ProgInput.Point").on("click", function () {
+    console.log("dsfksldf");
+    var text = $("input.ProgInput.Point").val();
+    var arr = text.split(",");
+    var x = parseFloat(arr[0]) / 24 + 3;
+    var y = -parseFloat(arr[1]) / 24 + 3;
+    var pt = toGlobalCoord(x, y);
+    console.log(x, y);
+    var pointBtn = new MovingButton(
+        pt.x - 1.5 / 2, pt.y - 1.5 / 2, 1.5, 1.5,
+        p.color(0, 0, 0, 1), p.color(0, 250, 250), p.color(0, 230, 230), p.color(0, 210, 210),
+        "", 0, 0
+    );
+    plotPoints.push(pointBtn);
+});
 var width, height, p;
 var MOGO_YELLOW, MOGO_RED, MOGO_BLUE, neutralMogos, mogoWidth, redMogos, blueMogos,
     MOGO_BLUE_DARK, MOGO_RED_DARK, rings, RING_PURPLE, GPS_POS, GPS_TOP_LEFT;
@@ -72,6 +87,8 @@ var pastMvts = [];
 var program = [];
 var angleToGps;
 var allowGoalsMove = true;
+var plotPoints = [];
+var selectedButtonIndex = -1;
 var getButtonY = function* (i) {
     yield i;
     for (var x = 1; true; x++) {
@@ -586,10 +603,41 @@ function drawField() {
         p.rect(pos.x * height - rollerWidth - 2 * blackWidth, pos.y * height - rollerHeight * 2, blackWidth, rollerHeight * 2);
     }
     
+    //Plot points 
+    {
+        var selectedCopy = selectedButtonIndex;
+        if (selectedButtonIndex !== -1) {
+            var pt = plotPoints[selectedButtonIndex];
+            //Set fill color to different turqoise
+            pt.inner = p.color(0, 180, 255);
+            var pos = pt.position();
+            var fieldPos = toFieldCoordV(pos);
+            p.text("X: " + (fieldPos.x * 12).toFixed(2) + " Y: " + (fieldPos.y * 12).toFixed(2), 1*height, 75*height);
+        }
+        p.noFill();
+        var anyPressed = false;
+        for (const pt of plotPoints) {
+            pt.draw();
+            pt.handlePress();
+            if (pt.pressing) {
+                allowGoalsMove = false;
+                selectedButtonIndex = plotPoints.indexOf(pt);
+            }
+            // console.log(pt);
+            if (!pt.pressing && pt.pressed) {
+                allowGoalsMove = true;
+            }
+        }
+        if (selectedCopy !== -1) {
+            plotPoints[selectedCopy].inner = p.color(0, 250, 250);
+        }
+    }
+
     //Robot
     {
         drawBot(botPos, botAngle, 255);
     }
+
 }
 function mobileGoal(x, y) {
     p.strokeWeight(0);
@@ -654,11 +702,11 @@ const s = pi => {
         120, 90, 16, 8, p.color(0, 0, 0), p.color(0, 255, 0), p.color(0, 230, 0), p.color(0, 200, 0),
         "Next", 2.5, 5.5);
     var undoBtn = new Button(
-        5, 90, 17, 5.5, p.color(0), p.color(200), p.color(180), p.color(160),
+        5, 93, 17, 5.5, p.color(0), p.color(200), p.color(180), p.color(160),
         "Undo", 2.5, 3.5
     );
     var compileBtn = new Button(
-        5, 80, 17, 5.5, p.color(0), p.color(200), p.color(180), p.color(160),
+        5, 85, 17, 5.5, p.color(0), p.color(200), p.color(180), p.color(160),
         "Compile", 2.5, 3.5
     );
     var editDriveToPos = basicMoving();
@@ -1051,6 +1099,19 @@ const s = pi => {
                 console.log(botPos);
                 break;
 
+        }
+    }
+    pi.mouseClicked = function () {
+        if (p.mouseButton === p.RIGHT) {
+            for (var btn of plotPoints) {
+                if (btn.pressing) {
+                    //Remove it from the array
+                    var index = plotPoints.indexOf(btn);
+                    if (index > -1) {
+                        plotPoints.splice(index, 1);
+                    }
+                }
+            }
         }
     }
 };

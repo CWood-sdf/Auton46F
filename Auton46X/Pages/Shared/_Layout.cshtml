@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,8 +8,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
+
 <body>
-   
+
     @RenderBody()
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -18,19 +20,21 @@
     <script src="~/js/MovingButton.js"></script>
     <script src="~/js/Slide.js"></script>
     <script src="~/js/Bezier.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-
-
-    @RenderSection("Scripts", required: false)
 
     <label for="ProgramNum" class="ProgInput Num">Number Arg: </label>
     <input type="number" name="ProgramNum" class="ProgInput Num" />
     <label for="ProgramBool" class="ProgInput Bool">Threaded Arg: </label>
     <input type="checkbox" name="ProgramBool" class="ProgInput Bool" />
-    
+    <button for="PlotPoint" class="ProgInput Point" id="PlotPoint">Threaded Arg: </button>
+    <input type="text" name="PlotPoint" class="ProgInput Point" />
+
     <ul>
 
     </ul>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
+
 </html>

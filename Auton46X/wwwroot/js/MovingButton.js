@@ -14,7 +14,7 @@
         this.offX = tOffX;
         this.offY = tOffY;
         this.hovering = true;
-    }
+    };
     draw() {
         p.stroke(this.border);
         p.strokeWeight(1);
@@ -28,7 +28,7 @@
         p.rect((this.x) * height, (this.y) * height, this.w * height, this.h * height, 10);
         p.fill(255, 255, 255);
         p.text(this.msg, (this.x + this.offX) * height, (this.y + this.offY) * height);
-    }
+    };
     handlePress() {
         if (p.mouseX > this.x * height && p.mouseY > this.y * height && p.mouseX < (this.x + this.w) * height && p.mouseY < (this.y + this.h) * height) {
             this.hovering = true;
@@ -53,7 +53,13 @@
             this.pressed = true;
             this.pressing = false;
         }
-    }
+    };
+    released() {
+        if(!this.pressing && this.pressed) {
+            return true;
+        }
+        return false;
+    };
     position() {
         return p.createVector(this.x + this.w / 2, this.y + this.h / 2);
     };
@@ -64,5 +70,5 @@
             return true;
         }
         return false;
-    }
+    };
 };

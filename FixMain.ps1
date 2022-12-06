@@ -1,10 +1,28 @@
 "dotnet build" | cmd.exe
 
-$Runspace = [runspacefactory]::CreateRunspace()
-$PowerShell = [powershell]::Create()
-$PowerShell.Runspace = $Runspace
-$Runspace.Open()
-$PowerShell.AddScript({ "dotnet run --project Auton46X" | cmd.exe })
+#Trust the self-signed certificate
+try {
+add-type @"
+   using System.Net;
+   using System.Security.Cryptography.X509Certificates;
+   public class TrustAllCertsPolicy : ICertificatePolicy {
+      public bool CheckValidationResult(
+      ServicePoint srvPoint, X509Certificate certificate,
+      WebRequest request, int certificateProblem) {
+      return true;
+   }
+}
+"@
+}
+catch {
+}
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+
+# $Runspace = [runspacefactory]::CreateRunspace()
+# $PowerShell = [powershell]::Create()
+# $PowerShell.Runspace = $Runspace
+# $Runspace.Open()
+# $PowerShell.AddScript({ "C:\Users\woodc\Downloads\dotnet\dotnet.exe run --project Auton46X" | cmd.exe })
 # $invoke = $PowerShell.BeginInvoke()
 # Start-Sleep -Seconds 1
 
@@ -12,7 +30,7 @@ $uri = "https://localhost:5001"
 $success = 0
 $webreq
 # Write-Output "Waiting for server to start..."
-while($success -eq 0) {
+while ($success -eq 0) {
     try {
         $webreq = Invoke-WebRequest -Uri $uri
         $success = 1
