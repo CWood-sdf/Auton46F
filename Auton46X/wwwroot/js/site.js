@@ -694,7 +694,7 @@ const s = pi => {
     p = pi;
 
     pi.setup = function () {
-        pi.createCanvas(window.innerWidth, window.innerHeight);
+        pi.createCanvas(window.innerWidth - 1, window.innerHeight - 2);
     };
     stage = stages["init"];
     var angleSlide = new Slide(10, 96, 50, 2, 360, p.color(0, 0, 0), p.color(255, 0, 0), p.color(255, 255, 0));
