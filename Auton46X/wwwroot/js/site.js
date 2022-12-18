@@ -612,7 +612,7 @@ function drawField() {
             pt.inner = p.color(0, 180, 255);
             var pos = pt.position();
             var fieldPos = toFieldCoordV(pos);
-            p.text("X: " + (fieldPos.x * 12).toFixed(2) + " Y: " + (fieldPos.y * 12).toFixed(2), 1*height, 75*height);
+            p.text("X: " + (fieldPos.x * 24 - 72).toFixed(2) + " Y: " + (-fieldPos.y * 24 + 72).toFixed(2), 1*height, 75*height);
         }
         p.noFill();
         var anyPressed = false;
@@ -694,7 +694,11 @@ const s = pi => {
     p = pi;
 
     pi.setup = function () {
-        pi.createCanvas(window.innerWidth - 1, window.innerHeight - 2);
+        pi.createCanvas(p.windowWidth, p.windowHeight);
+        $("canvas").contextmenu(e => {
+            e.preventDefault();
+            
+        });
     };
     stage = stages["init"];
     var angleSlide = new Slide(10, 96, 50, 2, 360, p.color(0, 0, 0), p.color(255, 0, 0), p.color(255, 255, 0));
@@ -759,7 +763,6 @@ const s = pi => {
                 p.textSize(2.5 * height);
                 toNextBtn.draw();
                 if (toNextBtn.isDone()) {
-                    debugger;
                     $("ul").append(`<li>[${limDecimal(botPos.x)}, ${limDecimal(botPos.y)}], ${limDecimal(botAngle)}</li>`);
                     allowGoalsMove = true;
                     $(".ProgInput").show();
@@ -1101,7 +1104,12 @@ const s = pi => {
 
         }
     }
-    pi.mouseClicked = function () {
+    pi.mouseClicked = function (e) {
+
+        
+    }
+    pi.mouseReleased = function (e) {
+        e.preventDefault();
         if (p.mouseButton === p.RIGHT) {
             for (var btn of plotPoints) {
                 if (btn.pressing) {
@@ -1110,9 +1118,12 @@ const s = pi => {
                     if (index > -1) {
                         plotPoints.splice(index, 1);
                     }
+                    if (index == selectedButtonIndex) {
+                        selectedButtonIndex = -1;
+                    }
                 }
             }
         }
-    }
+    };
 };
 
