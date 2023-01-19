@@ -186,138 +186,17 @@ var initVars = function() {
                 addListEl(`spinRoller();`);
             }
         ], // spinRoller
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "raiseLiftByOne(void) [threaded]", xOff, 3),
-        //    function () {
-        //        var c = $("input.Bool").is(":checked");
-        //        if (c) {
-        //            program.push([
-        //                cmdType["NonMvt"], `raiseLiftByOne();`
-        //            ]);
-        //            addListEl(`raiseLiftByOne();`)
-        //        } else {
-        //            program.push([
-        //                cmdType["NonMvt"], `raiseLiftByOneWait();`
-        //            ]);
-        //            addListEl(`raiseLiftByOneWait();`);
-        //        }
-
-        //    }
-        //], // raiseLiftByOne
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "lowerLiftByOne(void) [threaded]", xOff, 3),
-        //    function () {
-        //        var c = $("input.Bool").is(":checked");
-        //        if (c) {
-        //            program.push([
-        //                cmdType["NonMvt"], `lowerLiftByOne();`
-        //            ]);
-        //            addListEl(`lowerLiftByOne();`);
-        //        } else {
-        //            program.push([
-        //                cmdType["NonMvt"], `lowerLiftByOneWait();`
-        //            ]);
-        //            addListEl(`lowerLiftByOneWait();`);
-        //        }
-
-        //    }
-        //], // lowerLiftByOne
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "waitForLiftFinish(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `waitForLiftFinish();`
-        //        ]);
-        //        addListEl(`waitForLiftFinish();`);
-        //    }
-        //], // waitForLiftFinish
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "clipGoal(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `clipGoal();`
-        //        ]);
-        //        addListEl('clipGoal();');
-        //    }
-        //], // clipGoal
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "unclipGoal(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `unclipGoal();`
-        //        ]);
-        //        addListEl(`unclipGoal();`);
-        //    }
-        //], // unclipGoal
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "balanceBot(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `balanceBot();`
-        //        ]);
-        //        addListEl(`balanceBot();`);
-
-        //    }
-        //], // balanceBot
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "clipLiftGoal(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `clipLiftGoal();`
-        //        ]);
-        //        addListEl(`clipLiftGoal();`);
-        //    }
-        //], // clipLiftGoal
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "unclipLiftGoal(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `unclipLiftGoal();`
-        //        ]);
-        //        addListEl(`unclipLiftGoal();`);
-
-        //    }
-        //], // unclipLiftGoal
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "useLineGoalDetect(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `useLineGoalDetect();`
-        //        ]);
-        //        addListEl(`useLineGoalDetect();`);
-
-        //    }
-        //], // useLineGoalDetect
-        //[
-        //    new Button(
-        //        bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-        //        "useLineGoalDetectNoExit(void)", xOff, 3),
-        //    function () {
-        //        program.push([
-        //            cmdType["NonMvt"], `useLineGoalDetectNoExit();`
-        //        ]);
-        //        addListEl(`useLineGoalDetectNoExit();`);
-
-        //    }
-        //], // useLineGoalDetectNoExit
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "launchDisks(void)", xOff, 3),
+            function () {
+                program.push([
+                    cmdType["NonMvt"], `launchDisks();`
+                ]);
+                addListEl(`launchDisks();`);
+            }
+        ], // launchDisks
     ];
     neutralMogos = [
         toGlobalCoord(3, 1.5),
