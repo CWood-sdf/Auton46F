@@ -1,9 +1,9 @@
 $LayoutPage = ""
-Get-Content -Path Pages/Shared/_Layout.cshtml | ForEach-Object {
+Get-Content -Path Auton46X/Pages/Shared/_Layout.cshtml | ForEach-Object {
     $LayoutPage += $_ + "`r`n"
 }
 $IndexPage = ""
-Get-Content -Path Pages/Index.cshtml | ForEach-Object {
+Get-Content -Path  Auton46X/Pages/Index.cshtml | ForEach-Object {
     $IndexPage += $_ + "`r`n"
 }
 # Replace the @renderBody() with nothing
@@ -25,7 +25,7 @@ $jsRegex = "<script src="
 $cssRegex = '<link rel="stylesheet" href='
 $newPage = ""
 
-$uri = "wwwroot"
+$uri = "Auton46X/wwwroot"
 ForEach ($line in $($LayoutPage -split "`r`n")) {
     if ($line -match $jsRegex) {
         $match = [regex]::Match($line, $jsRegex)
