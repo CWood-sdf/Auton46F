@@ -75,6 +75,8 @@ var stages = {
     "Edit followPath": 4,
     "Edit turnTo": 5,
     "Edit backwardsFollow": 6,
+    "Edit backInto": 7,
+    "Edit faceTarget": 8,
 };
 var cmdType = {
     "Mvt": 0,
