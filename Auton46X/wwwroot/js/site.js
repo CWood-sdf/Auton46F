@@ -142,6 +142,14 @@ var initVars = function() {
             }
         ], // driveTo
         [
+             new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "backInto(PVector)", xOff, 3),
+            function () {
+                stage = stages["Edit backInto"];
+            }
+        ], // backInto
+        [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
                 "followPath(VectorArr)", xOff, 3),
@@ -714,6 +722,46 @@ const s = pi => {
                         `wc.driveTo(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`
                     ]);
                     addListEl(`wc.driveTo(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`);
+                    botPos = fieldPos;
+                    botAngle = angle;
+                }
+                break;
+            case stages["Edit backInto"]:
+                editDriveToPos.handlePress();
+                allowGoalsMove = true;
+                if (editDriveToPos.pressing) {
+                    allowGoalsMove = false;
+                }
+                editDriveToPos.isDone();
+                var fieldPos = toFieldCoordV(editDriveToPos.position());
+                fieldPos.sub(3, 3);
+                var angle = botPos.angleTo(fieldPos) * 360 / p.TWO_PI - 90;
+                var path = bezierCurve(new VectorArr([botPos, fieldPos]), 0.05);
+                for (var i of path) {
+                    var pt = toGlobalCoordV(p5.Vector.add(i, p.createVector(3, 3)));
+                    p.stroke(255, 255, 0);
+                    p.strokeWeight(3);
+                    p.point(pt.x * height, pt.y * height);
+                }
+
+                fakeBot(fieldPos, angle);
+                p.textSize(2.5 * height);
+                editDriveToPos.draw();
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.bacInto(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`
+                    ]);
+                    addListEl(`wc.backInto(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`);
                     botPos = fieldPos;
                     botAngle = angle;
                 }
