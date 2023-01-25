@@ -26,13 +26,13 @@ label.Num {
     margin-bottom: 0px;
     padding-bottom: 0px;
     bottom: 1%;
-    left: 12%;
+    left: 15%;
 }
 label.Bool {
     margin-bottom: 0px;
     padding-bottom: 0px;
     bottom: 1%;
-    left: 25%;
+    left: 30%;
 }
 button.Point {
     margin-bottom: 0px;
@@ -45,12 +45,12 @@ button.Point {
 
     input.Num {
         bottom: 1%;
-        left: 20%;
+        left: 24%;
     }
 
     input.Bool {
         bottom: 0.5%;
-        left: 36%;
+        left: 40%;
         width: 20px;
         height: 20px;
     }

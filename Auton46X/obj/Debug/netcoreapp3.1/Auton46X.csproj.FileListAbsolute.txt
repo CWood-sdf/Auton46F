@@ -221,10 +221,6 @@ C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.dll
 C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.pdb
 C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.genruntimeconfig.cache
 C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.csproj.CopyComplete
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.csproj.AssemblyReference.cache
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\Auton46X.StaticWebAssets.Pack.cache
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.Auton46X.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.build.Auton46X.props
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildMultiTargeting.Auton46X.props
-C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildTransitive.Auton46X.props
+C:\Users\woodc\Auton46F\Auton46X\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\Auton46X.csprojAssemblyReference.cache
+C:\Users\woodc\Auton46F\Auton46X\obj\Debug\netcoreapp3.1\staticwebassets\Auton46X.StaticWebAssets.xml

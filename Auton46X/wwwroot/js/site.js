@@ -77,6 +77,8 @@ var stages = {
     "Edit backwardsFollow": 6,
     "Edit backInto": 7,
     "Edit faceTarget": 8,
+    "Edit driveDistance": 9,
+    "Edit backwardsDriveDistance": 10,
 };
 var cmdType = {
     "Mvt": 0,
@@ -118,6 +120,7 @@ const compile = () => {
     }
     return ret;
 };
+var driveDistanceButton;
 var initVars = function() {
     field.endX = field.endX();
     field.endY = field.endY();
@@ -134,6 +137,7 @@ var initVars = function() {
     mogoWidth = field.size / 24;
     var xOff = 1.5;
     var w = 35;
+    driveDistanceButton = basicMoving();
     buttonAndAction = [
         [
             new Button(
@@ -169,6 +173,26 @@ var initVars = function() {
                 pathBtnArr = [basicMoving()];
             }
         ], // backwardsFollow
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "driveDistance(double)", xOff, 3),
+            function () {
+                stage = stages["Edit driveDistance"];
+                // debugger;
+                var pos = toGlobalCoord(botPos.x + 3, botPos.y + 3);
+                driveDistanceButton.x = pos.x - driveDistanceButton.w / 2;
+                driveDistanceButton.y = pos.y - driveDistanceButton.h / 2;
+            }
+        ], // driveDistance
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "backwardsDriveDistance(double)", xOff, 3),
+            function () {
+                stage = stages["Edit backwardsDriveDistance"];
+            }
+        ],
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
@@ -1012,6 +1036,76 @@ const s = pi => {
                     addListEl(`wc.faceTarget({${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${limDecimal(fieldPos.y * -FIELD_TO_NORM)}});`);
                     botAngle = angle;
                     botPos = botCenter;
+                }
+                break;
+            case stages["Edit driveDistance"]:
+                allowGoalsMove = true;
+                if (driveDistanceButton.pressing) {
+                    allowGoalsMove = false;
+                }
+                var angle = botAngle;
+                var off = p.createVector(0, -100);
+                off.rotate(angle * p.PI / 180.0);
+                var pos = p5.Vector.add(p.createVector(3, 3), botPos);
+                driveDistanceButton.setConstraints([toGlobalCoordV(pos), p5.Vector.add(toGlobalCoordV(pos), off)]);
+                driveDistanceButton.draw();
+                driveDistanceButton.handlePress();
+                p.textSize(2.5 * height);
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                var fieldPos = toFieldCoordV(driveDistanceButton.position());
+                fieldPos.sub(3, 3);
+                fakeBot(fieldPos, angle);
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.driveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`
+                    ]);
+                    addListEl(`wc.driveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`);
+                    botPos = fieldPos;
+                    botAngle = angle;
+                }
+                break;
+            case stages["Edit backwardsDriveDistance"]:
+                allowGoalsMove = true;
+                if (driveDistanceButton.pressing) {
+                    allowGoalsMove = false;
+                }
+                var angle = botAngle;
+                var off = p.createVector(0, 100);
+                off.rotate(angle * p.PI / 180.0);
+                var pos = p5.Vector.add(p.createVector(3, 3), botPos);
+                driveDistanceButton.setConstraints([toGlobalCoordV(pos), p5.Vector.add(toGlobalCoordV(pos), off)]);
+                driveDistanceButton.draw();
+                driveDistanceButton.handlePress();
+                p.textSize(2.5 * height);
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                var fieldPos = toFieldCoordV(driveDistanceButton.position());
+                fieldPos.sub(3, 3);
+                fakeBot(fieldPos, angle);
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.backwardsDriveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`
+                    ]);
+                    addListEl(`wc.backwardsDriveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`);
+                    botPos = fieldPos;
+                    botAngle = angle;
                 }
                 break;
         }
