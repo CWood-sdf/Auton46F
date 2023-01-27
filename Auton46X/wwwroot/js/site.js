@@ -121,7 +121,7 @@ const compile = () => {
     return ret;
 };
 var driveDistanceButton;
-var initVars = function() {
+var initVars = function () {
     field.endX = field.endX();
     field.endY = field.endY();
     field.size = field.endX - field.startX;
@@ -148,7 +148,7 @@ var initVars = function() {
             }
         ], // driveTo
         [
-             new Button(
+            new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
                 "backInto(PVector)", xOff, 3),
             function () {
@@ -354,7 +354,7 @@ function drawField() {
             p.line(height * field.startX, base, height * field.endX, base);
         }
         p.strokeWeight(3);
-        
+
         var autonLines = [
             [toGlobalCoord(0, 1), toGlobalCoord(0.5, 1)],
             [toGlobalCoord(6, 5), toGlobalCoord(5.5, 5)],
@@ -370,7 +370,7 @@ function drawField() {
         for (var i of autonLines) {
             p.line(i[0].x * height, i[0].y * height, i[1].x * height, i[1].y * height);
         }
-        
+
     }
     var vertex = (x, y) => {
         var pt = toGlobalCoord(x, y);
@@ -515,7 +515,7 @@ function drawField() {
         p.rect(pos.x * height - blackWidth, pos.y * height - rollerHeight * 2, blackWidth, rollerHeight * 2);
         p.rect(pos.x * height - rollerWidth - 2 * blackWidth, pos.y * height - rollerHeight * 2, blackWidth, rollerHeight * 2);
     }
-    
+
     //Plot points 
     {
         var selectedCopy = selectedButtonIndex;
@@ -525,7 +525,7 @@ function drawField() {
             pt.inner = p.color(0, 180, 255);
             var pos = pt.position();
             var fieldPos = toFieldCoordV(pos);
-            p.text("X: " + (fieldPos.x * 24 - 72).toFixed(2) + " Y: " + (-fieldPos.y * 24 + 72).toFixed(2), 1*height, 75*height);
+            p.text("X: " + (fieldPos.x * 24 - 72).toFixed(2) + " Y: " + (-fieldPos.y * 24 + 72).toFixed(2), 1 * height, 75 * height);
         }
         p.noFill();
         var anyPressed = false;
@@ -558,7 +558,7 @@ function mobileGoal(x, y) {
     p.beginShape();
     var rot = p.TWO_PI / 7;
     for (var i = 0; i < 7; i++) {
-        p.vertex(w.x + x*height, w.y + y*height);
+        p.vertex(w.x + x * height, w.y + y * height);
         w.rotate(rot);
     }
     p.endShape(p.CLOSE);
@@ -599,7 +599,7 @@ function limDecimal(num, maxCount) {
         if (i == '.') {
             willCount = true;
         }
-        
+
     }
     return ret;
 }
@@ -610,7 +610,7 @@ const s = pi => {
         pi.createCanvas(p.windowWidth, p.windowHeight);
         $("canvas").contextmenu(e => {
             e.preventDefault();
-            
+
         });
     };
     stage = stages["init"];
@@ -690,11 +690,11 @@ const s = pi => {
                 p.textSize(3 * height);
                 p.text("Program the robot", 1 * height, 50, (field.startX - 2) * height, 300);
                 undoBtn.handlePress();
-                undoBtn.draw(); 
+                undoBtn.draw();
                 compileBtn.handlePress();
                 compileBtn.draw();
                 if (compileBtn.isDone()) {
-                    var prog = compile(); 
+                    var prog = compile();
                     console.log(prog);
                     window.navigator.clipboard.writeText(prog);
                     window.alert("Program Copied!");
@@ -785,7 +785,7 @@ const s = pi => {
                     stage = stages["Programming"];
                     program.push([
                         cmdType["Mvt"],
-                        `wc.bacInto(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`
+                        `wc.backInto(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`
                     ]);
                     addListEl(`wc.backInto(${limDecimal(fieldPos.x * FIELD_TO_NORM)}, ${-limDecimal(fieldPos.y * FIELD_TO_NORM)});`);
                     botPos = fieldPos;
@@ -797,7 +797,7 @@ const s = pi => {
                 allowGoalsMove = true;
                 for (var i of pathBtnArr) {
                     i.handlePress();
-                    
+
                     if (i.pressing) {
                         allowGoalsMove = false;
                         break;
@@ -813,10 +813,10 @@ const s = pi => {
                     algorithmChange.msg = msg;
                 }
                 algorithmChange.draw();
-                
+
                 for (var i of pathBtnArr) {
                     i.isDone();
-                } 
+                }
 
                 var pos = new VectorArr([botPos]);
                 for (var i of pathBtnArr) {
@@ -857,7 +857,7 @@ const s = pi => {
                         str += `PVector(${limDecimal(i.x * FIELD_TO_NORM)}, ${-limDecimal(i.y * FIELD_TO_NORM)}), `;
                     }
                     str = str.substring(0, str.length - 2);
-                    
+
                     program.push([
                         cmdType["Mvt"],
                         `wc.followPath(${algToVar[algorithmChange.msg || "Pure Pursuit"]}, {${str}});`
@@ -955,14 +955,14 @@ const s = pi => {
                 turnToAngle.isDone();
                 var fieldPos = toFieldCoordV(turnToAngle.position());
                 fieldPos.sub(3, 3);
-                
+
                 p.stroke(255, 255, 0, 200);
                 p.strokeWeight(1);
                 var botCenter = GPS_POS.copy();
                 botCenter.mult(-1);
                 botCenter.rotate(botAngle * p.PI / 180.0);
                 botCenter.add(botPos);
-                
+
                 var fieldCoord = toGlobalCoordV(p5.Vector.add(fieldPos, p.createVector(3, 3)));
                 var botCoord = toGlobalCoordV(p5.Vector.add(botCenter, p.createVector(3, 3)));
                 var newGps = GPS_POS.copy();
@@ -1001,14 +1001,14 @@ const s = pi => {
                 turnToAngle.isDone();
                 var fieldPos = toFieldCoordV(turnToAngle.position());
                 fieldPos.sub(3, 3);
-                
+
                 p.stroke(255, 255, 0, 200);
                 p.strokeWeight(1);
                 var botCenter = GPS_POS.copy();
                 botCenter.mult(-1);
                 botCenter.rotate(botAngle * p.PI / 180.0);
                 botCenter.add(botPos);
-                
+
                 var fieldCoord = toGlobalCoordV(p5.Vector.add(fieldPos, p.createVector(3, 3)));
                 var botCoord = toGlobalCoordV(p5.Vector.add(botCenter, p.createVector(3, 3)));
                 var newGps = GPS_POS.copy();
@@ -1129,7 +1129,7 @@ const s = pi => {
     }
     pi.mouseClicked = function (e) {
 
-        
+
     }
     pi.mouseReleased = function (e) {
         e.preventDefault();
