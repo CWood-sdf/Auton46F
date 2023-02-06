@@ -231,6 +231,17 @@ var initVars = function () {
                 addListEl(`launchDisks();`);
             }
         ], // launchDisks
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "intake(int)", xOff, 3),
+            function () {
+                program.push([
+                    cmdType["NonMvt"], `intake(${$("input.ProgInput.Num").val()});`
+                ]);
+                addListEl(`intake(${$("input.ProgInput.Num").val()});`);
+            }
+        ], // launchDisks
     ];
     neutralMogos = [
         toGlobalCoord(3, 1.5),
