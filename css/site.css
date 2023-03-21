@@ -50,7 +50,7 @@ button.Point {
 
     input.Bool {
         bottom: 0.5%;
-        left: 33%;
+        left: 36%;
         width: 20px;
         height: 20px;
     }
@@ -114,11 +114,11 @@ button.Point {
     }
 }
 /* To remove the scrollbars */
+
 ul {
-    overflow-y: auto;
     position: absolute;
     background-color: rgb(100, 100, 100);
-    width: 9.6%;
+    width: 10%;
     height: 45%;
     margin: 0px;
     padding: 0px;
