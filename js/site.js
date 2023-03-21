@@ -143,28 +143,7 @@ function programmingBank() {
         }
     }
 }
-//Limits a decimal string to a number of decimals
-function limDecimal(num, maxCount) {
-    var str = `${num}`;
-    var ret = '';
-    var count = 0
-    maxCount ??= 2;
-    var willCount = false;
-    for (var i of str) {
-        ret += i;
-        if (willCount) {
-            count++;
-            if (count >= maxCount) {
-                break;
-            }
-        }
-        if (i == '.') {
-            willCount = true;
-        }
 
-    }
-    return ret;
-}
 var commitBtn, undoBtn, deleteBtn, compileBtn, toNextBtn, addBtn, commitBtn, deleteBtn, algorithmChange, angleSlide, editDriveToPos; var driveAlgorithm = 0;
 var algorithms = ["Pure Pursuit", "Ramsete", "Basic PID"];
 var algToVar = {
@@ -293,6 +272,7 @@ function editFollowPath(isBackward) {
         pathBtnArr.push(basicMoving());
     }
 }
+//Just dont look in here
 const s = pi => {
     p = pi;
 

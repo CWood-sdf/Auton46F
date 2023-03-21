@@ -4,6 +4,28 @@ p5.Vector.prototype.angleTo = function (v) {
     newV.sub(this);
     return newV.heading();
 }
+//Limits a decimal string to a number of decimals
+function limDecimal(num, maxCount) {
+    var str = `${num}`;
+    var ret = '';
+    var count = 0
+    maxCount ??= 2;
+    var willCount = false;
+    for (var i of str) {
+        ret += i;
+        if (willCount) {
+            count++;
+            if (count >= maxCount) {
+                break;
+            }
+        }
+        if (i == '.') {
+            willCount = true;
+        }
+
+    }
+    return ret;
+}
 //Adds a program element to the output log
 function addListEl(str) {
     $("ul").append(`<li>${str}</li>`);
