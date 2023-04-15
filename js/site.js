@@ -453,10 +453,7 @@ const s = pi => {
                 }
                 break;
             case stages["Edit driveDistance"]:
-                allowGoalsMove = true;
-                if (driveDistanceButton.pressing) {
-                    allowGoalsMove = false;
-                }
+                allowObjectsMove = false;
                 var angle = botAngle;
                 var off = p.createVector(0, -100);
                 off.rotate(angle * p.PI / 180.0);
@@ -488,11 +485,8 @@ const s = pi => {
                 }
                 break;
             case stages["Edit backwardsDriveDistance"]:
-                allowGoalsMove = true;
-                if (driveDistanceButton.pressing) {
-                    allowGoalsMove = false;
-                }
                 var angle = botAngle;
+                allowObjectsMove = false;
                 var off = p.createVector(0, 100);
                 off.rotate(angle * p.PI / 180.0);
                 var pos = p5.Vector.add(p.createVector(3, 3), botPos);
