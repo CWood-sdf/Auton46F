@@ -1,4 +1,5 @@
 ﻿//The plot point callback
+var driveDistanceButton;
 $("button.ProgInput.Point").on("click", function () {
     var text = $("input.ProgInput.Point").val();
     var arr = text.split(",");
@@ -50,6 +51,8 @@ var stages = {
     "Edit backwardsFollow": 6,
     "Edit backInto": 7,
     "Edit faceTarget": 8,
+    "Edit driveDistance": 9,
+    "Edit backwardsDriveDistance": 10,
 };
 //An "enum" for what the last type of command was
 var cmdType = {
@@ -313,7 +316,8 @@ const s = pi => {
         120, 70, 17, 8, p.color(0, 0, 0), p.color(0, 0, 255), p.color(0, 0, 230), p.color(0, 0, 200),
         "", 2.5, 5.5);
     var turnToAngle = basicMoving();
-    
+
+    driveDistanceButton = basicMoving();
     pi.draw = function () {
         if (stage !== 0) {
             drawField();
@@ -446,6 +450,76 @@ const s = pi => {
                     addListEl(`wc.turnTo(${limDecimal(angle)});`);
                     botAngle = angle;
                     botPos = botCenter;
+                }
+                break;
+            case stages["Edit driveDistance"]:
+                allowGoalsMove = true;
+                if (driveDistanceButton.pressing) {
+                    allowGoalsMove = false;
+                }
+                var angle = botAngle;
+                var off = p.createVector(0, -100);
+                off.rotate(angle * p.PI / 180.0);
+                var pos = p5.Vector.add(p.createVector(3, 3), botPos);
+                driveDistanceButton.setConstraints([toGlobalCoordV(pos), p5.Vector.add(toGlobalCoordV(pos), off)]);
+                driveDistanceButton.draw();
+                driveDistanceButton.handlePress();
+                p.textSize(2.5 * height);
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                var fieldPos = toFieldCoordV(driveDistanceButton.position());
+                fieldPos.sub(3, 3);
+                fakeBot(fieldPos, angle);
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.driveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`
+                    ]);
+                    addListEl(`wc.driveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`);
+                    botPos = fieldPos;
+                    botAngle = angle;
+                }
+                break;
+            case stages["Edit backwardsDriveDistance"]:
+                allowGoalsMove = true;
+                if (driveDistanceButton.pressing) {
+                    allowGoalsMove = false;
+                }
+                var angle = botAngle;
+                var off = p.createVector(0, 100);
+                off.rotate(angle * p.PI / 180.0);
+                var pos = p5.Vector.add(p.createVector(3, 3), botPos);
+                driveDistanceButton.setConstraints([toGlobalCoordV(pos), p5.Vector.add(toGlobalCoordV(pos), off)]);
+                driveDistanceButton.draw();
+                driveDistanceButton.handlePress();
+                p.textSize(2.5 * height);
+                deleteBtn.draw();
+                deleteBtn.handlePress();
+                commitBtn.draw();
+                commitBtn.handlePress();
+                var fieldPos = toFieldCoordV(driveDistanceButton.position());
+                fieldPos.sub(3, 3);
+                fakeBot(fieldPos, angle);
+                if (deleteBtn.isDone()) {
+                    stage = stages["Programming"];
+                }
+                else if (commitBtn.isDone()) {
+                    pastMvts.push([botPos, botAngle]);
+                    stage = stages["Programming"];
+                    program.push([
+                        cmdType["Mvt"],
+                        `wc.backwardsDriveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`
+                    ]);
+                    addListEl(`wc.backwardsDriveDistance(${limDecimal(fieldPos.dist(botPos) * 24)});`);
+                    botPos = fieldPos;
+                    botAngle = angle;
                 }
                 break;
             case stages["Edit faceTarget"]:
