@@ -69,6 +69,26 @@ var initVars = function () {
         [
             new Button(
                 bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "driveDistance(double)", xOff, 3),
+            function () {
+                stage = stages["Edit driveDistance"];
+                // debugger;
+                var pos = toGlobalCoord(botPos.x + 3, botPos.y + 3);
+                driveDistanceButton.x = pos.x - driveDistanceButton.w / 2;
+                driveDistanceButton.y = pos.y - driveDistanceButton.h / 2;
+            }
+        ], // driveDistance
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "backwardsDriveDistance(double)", xOff, 3),
+            function () {
+                stage = stages["Edit backwardsDriveDistance"];
+            }
+        ],
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
                 "turnTo(double)", xOff, 3),
             function () {
                 stage = stages["Edit turnTo"];
@@ -102,6 +122,17 @@ var initVars = function () {
                     cmdType["NonMvt"], `launchDisks();`
                 ]);
                 addListEl(`launchDisks();`);
+            }
+        ], // launchDisks
+        [
+            new Button(
+                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
+                "intake(int)", xOff, 3),
+            function () {
+                program.push([
+                    cmdType["NonMvt"], `intake(${$("input.ProgInput.Num").val()});`
+                ]);
+                addListEl(`intake(${$("input.ProgInput.Num").val()});`);
             }
         ], // launchDisks
     ];
