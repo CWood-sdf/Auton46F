@@ -1,19 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Auton46F</title>
-    <link rel="shortcut-icon" href="favicon.ico">
+    <link rel="shortcut-icon" href="favicon.ico" />
     <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
-</head>
+  </head>
 
-<body>
-
-
-
+  <body>
     <script src="./lib/jquery/dist/jquery.min.js"></script>
     <script src="./lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./lib/p5.js/p5.min.js"></script>
@@ -29,21 +25,21 @@
     <input type="number" name="ProgramNum" class="ProgInput Num" />
     <label for="ProgramBool" class="ProgInput Bool">Threaded Arg: </label>
     <input type="checkbox" name="ProgramBool" class="ProgInput Bool" />
-    <button for="PlotPoint" class="ProgInput Point" id="PlotPoint">Draw point: </button>
+    <button for="PlotPoint" class="ProgInput Point" id="PlotPoint">
+      Draw point:
+    </button>
     <input type="text" name="PlotPoint" class="ProgInput Point" />
 
-    <ul>
+    <label for="Angle" class="ProgInput Num Start">Bot Angle: </label>
+    <input type="number" name="Angle" class="ProgInput Num Start" />
 
-    </ul>
+    <ul></ul>
 
     <script src="./js/site.js" asp-append-version="true"></script>
 
     <script defer>
-
-
-        new p5(s); // invoke p5
+      new p5(s); // invoke p5
     </script>
-
-</body>
-
+  </body>
 </html>
+
