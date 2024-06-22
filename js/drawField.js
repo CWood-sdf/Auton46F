@@ -4,37 +4,44 @@ function drawField() {
   p.strokeWeight(1);
   //Field Lines
   {
+    var x = -72;
     //Basic Field Lines
     for (var i = 0; i < 7; i++) {
       var base = height * field.startX + height * i * field.tileWidth;
       p.line(base, height * field.startY, base, height * field.endY);
+      p.textSize(20);
+      p.text(x, base - 20, height * field.startY - 5);
+      x += 24;
     }
+    x = -72;
     for (var i = 0; i < 7; i++) {
       var base = height * field.startY + height * i * field.tileWidth;
       p.line(height * field.startX, base, height * field.endX, base);
+      p.text(x, height * field.endX + 5, base + 20);
+      x += 24;
     }
     p.strokeWeight(3);
     //Game dependent
-    var autonLines = [
-      [toGlobalCoord(0, 1), toGlobalCoord(0.5, 1)],
-      [toGlobalCoord(6, 5), toGlobalCoord(5.5, 5)],
-      [toGlobalCoord(2, 0), toGlobalCoord(2, 0.5)],
-      [toGlobalCoord(4, 6), toGlobalCoord(4, 5.5)],
-      [toGlobalCoord(0, 4), toGlobalCoord(1, 4)],
-      [toGlobalCoord(6, 2), toGlobalCoord(5, 2)],
-      [toGlobalCoord(2, 6), toGlobalCoord(2, 5)],
-      [toGlobalCoord(4, 0), toGlobalCoord(4, 1)],
-      [toGlobalCoord(0.05, 0), toGlobalCoord(6, 5.95)],
-      [toGlobalCoord(0, 0.05), toGlobalCoord(5.95, 6)],
-    ];
-    for (var i of autonLines) {
-      p.line(
-        i[0].x * height,
-        i[0].y * height,
-        i[1].x * height,
-        i[1].y * height,
-      );
-    }
+    // var autonLines = [
+    //   [toGlobalCoord(0, 1), toGlobalCoord(0.5, 1)],
+    //   [toGlobalCoord(6, 5), toGlobalCoord(5.5, 5)],
+    //   [toGlobalCoord(2, 0), toGlobalCoord(2, 0.5)],
+    //   [toGlobalCoord(4, 6), toGlobalCoord(4, 5.5)],
+    //   [toGlobalCoord(0, 4), toGlobalCoord(1, 4)],
+    //   [toGlobalCoord(6, 2), toGlobalCoord(5, 2)],
+    //   [toGlobalCoord(2, 6), toGlobalCoord(2, 5)],
+    //   [toGlobalCoord(4, 0), toGlobalCoord(4, 1)],
+    //   [toGlobalCoord(0.05, 0), toGlobalCoord(6, 5.95)],
+    //   [toGlobalCoord(0, 0.05), toGlobalCoord(5.95, 6)],
+    // ];
+    // for (var i of autonLines) {
+    //   p.line(
+    //     i[0].x * height,
+    //     i[0].y * height,
+    //     i[1].x * height,
+    //     i[1].y * height,
+    //   );
+    // }
   }
   var vertex = (x, y) => {
     var pt = toGlobalCoord(x, y);
@@ -307,4 +314,3 @@ function drawField() {
     drawBot(botPos, botAngle, 255);
   }
 }
-
