@@ -449,7 +449,7 @@ const s = (pi) => {
         allowObjectsMove = false;
         p.fill(255);
         //yess comic sans
-        p.textFont("Comic Sans MS");
+        // p.textFont("Comic Sans MS");
         p.textSize(3 * height);
         p.text(
           "Position the robot",
@@ -492,7 +492,7 @@ const s = (pi) => {
         $(".Start").hide();
         allowObjectsMove = true;
         p.fill(255);
-        p.textFont("Comic Sans MS");
+        // p.textFont("Comic Sans MS");
         p.textSize(3 * height);
         //Tell people that they can prog their bot now
         p.text(
