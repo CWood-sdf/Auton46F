@@ -1,4 +1,4 @@
-var getButtonY = function* (i) {
+var getButtonY = (function* (i) {
     yield i;
     for (var x = 1; true; x++) {
         if (i + x * 7 > 90) {
@@ -6,8 +6,8 @@ var getButtonY = function* (i) {
         }
         yield i + x * 7;
     }
-}(5);
-var getButtonX = function* (i) {
+})(5);
+var getButtonX = (function* (i) {
     yield i;
     for (var x = 1; true; x++) {
         if (i + x * 7 > 90) {
@@ -16,7 +16,7 @@ var getButtonX = function* (i) {
         }
         yield i;
     }
-}(5);
+})(5);
 var initVars = function () {
     field.endX = field.endX();
     field.endY = field.endY();
@@ -34,109 +34,215 @@ var initVars = function () {
     buttonAndAction = [
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "driveTo(PVector)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "driveTo(PVector)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit driveTo"];
-            }
+            },
         ], // driveTo
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "backInto(PVector)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "backInto(PVector)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit backInto"];
-            }
+            },
         ], // backInto
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "followPath(VectorArr)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "followPath(VectorArr)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit followPath"];
                 pathBtnArr = [basicMoving()];
-            }
+            },
         ], // followPath
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "backwardsFollow(VectorArr)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "backwardsFollow(VectorArr)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit backwardsFollow"];
                 pathBtnArr = [basicMoving()];
-            }
+            },
         ], // backwardsFollow
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "driveDistance(double)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "driveDistance(double)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit driveDistance"];
                 // debugger;
                 var pos = toGlobalCoord(botPos.x + 3, botPos.y + 3);
                 driveDistanceButton.x = pos.x - driveDistanceButton.w / 2;
                 driveDistanceButton.y = pos.y - driveDistanceButton.h / 2;
-            }
+            },
         ], // driveDistance
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "backwardsDriveDistance(double)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "backwardsDriveDistance(double)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit backwardsDriveDistance"];
-            }
+            },
         ],
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "turnTo(double)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "turnTo(double)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit turnTo"];
-            }
+            },
         ], // turnTo
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "faceTarget(PVector)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "faceTarget(PVector)",
+                xOff,
+                3,
+            ),
             function () {
                 stage = stages["Edit faceTarget"];
-            }
+            },
         ], // faceTarget
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "spinRoller(void)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "spinRoller(void)",
+                xOff,
+                3,
+            ),
             function () {
-                program.push([
-                    cmdType["NonMvt"], `spinRoller();`
-                ]);
+                program.push([cmdType["NonMvt"], `spinRoller();`]);
                 addListEl(`spinRoller();`);
-            }
+            },
         ], // spinRoller
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "launchDisks(void)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "launchDisks(void)",
+                xOff,
+                3,
+            ),
             function () {
-                program.push([
-                    cmdType["NonMvt"], `launchDisks();`
-                ]);
+                program.push([cmdType["NonMvt"], `launchDisks();`]);
                 addListEl(`launchDisks();`);
-            }
+            },
         ], // launchDisks
         [
             new Button(
-                bankOff + getButtonX.next().value, getButtonY.next().value, w, 5, p.color(0), p.color(100), p.color(80), p.color(60),
-                "intake(int)", xOff, 3),
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "intake(int)",
+                xOff,
+                3,
+            ),
             function () {
                 program.push([
-                    cmdType["NonMvt"], `intake(${$("input.ProgInput.Num").val()});`
+                    cmdType["NonMvt"],
+                    `intake(${$("input.ProgInput.Num").val()});`,
                 ]);
                 addListEl(`intake(${$("input.ProgInput.Num").val()});`);
-            }
+            },
         ], // launchDisks
     ];
-
 
     diskPos = [
         toGlobalCoord(1.5, 2.5),
@@ -144,10 +250,10 @@ var initVars = function () {
         toGlobalCoord(1.5, 2.5),
         toGlobalCoord(4.5, 3.5),
         toGlobalCoord(1.5, 2.5),
-        toGlobalCoord(4.5, 3.5)
+        toGlobalCoord(4.5, 3.5),
     ];
     for (var i = 0; i < 22; i++) {
-        diskPos.push(toGlobalCoord(0 + i / 21 * 6, -0.13));
+        diskPos.push(toGlobalCoord(0 + (i / 21) * 6, -0.13));
     }
     for (var v = 0.5; v < 6; v += 0.5) {
         if (v > 2 && v < 4) {
@@ -159,7 +265,9 @@ var initVars = function () {
             diskPos.push(toGlobalCoord(v, v));
         }
         //No disks in center
-        if (v === 3) { continue; }
+        if (v === 3) {
+            continue;
+        }
         diskPos.push(toGlobalCoord(v, v));
     }
     for (var v = 1 + 5.5 / 48; v <= 2 - 5.5 / 48; v += (1 - 5.5 / 24) / 2) {
@@ -177,13 +285,24 @@ var initVars = function () {
     height = p.height / 100;
     botPos = p.createVector(0, 0);
     botAngle = 30;
-    initVars = () => { };
+    initVars = () => {};
     for (var i of diskPos) {
         var diskWidth = inchesToGlobal(DISK_WIDTH) / height;
-        goalBtns.push(new MovingButton(
-            i.x - diskWidth / 2, i.y - diskWidth / 2, diskWidth, diskWidth,
-            p.color(0), p.color(0), p.color(0), p.color(0),
-            "", 0, 0)
+        goalBtns.push(
+            new MovingButton(
+                i.x - diskWidth / 2,
+                i.y - diskWidth / 2,
+                diskWidth,
+                diskWidth,
+                p.color(0),
+                p.color(0),
+                p.color(0),
+                p.color(0),
+                "",
+                0,
+                0,
+            ),
         );
     }
 };
+

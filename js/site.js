@@ -84,8 +84,6 @@ var plotPoints = [];
 
 //The index of the selected plot point
 var selectedPlotButtonIndex = -1;
-//Yooo i figured out how to use generator functions just for this
-//These get x and y values for the programming bank
 
 const compile = () => {
   var ret = `wc.estimateStartPos(PVector(${limDecimal(pastMvts[0][0].x * FIELD_TO_NORM)}, ${limDecimal(-pastMvts[0][0].y * FIELD_TO_NORM)}), ${limDecimal(pastMvts[0][1])});\n`;
