@@ -305,7 +305,7 @@ function editFollowPath(isBackward) {
             str += `PVector(${limDecimal(i.x * FIELD_TO_NORM)}, ${-limDecimal(i.y * FIELD_TO_NORM)}), `;
         }
         str = str.substring(0, str.length - 2);
-        var command = `${isBackward ? "backwardsFollow" : "followPath"}(${algToVar[algorithmChange.msg || "Pure Pursuit"]}, {${str}});`;
+        var command = `${isBackward ? "backwardsFollow" : "followPath"}({${str}});`;
         program.push([cmdType["Mvt"], command]);
         addListEl(command);
         botPos = fieldPos;
