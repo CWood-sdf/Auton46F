@@ -230,18 +230,64 @@ var initVars = function () {
                 p.color(100),
                 p.color(80),
                 p.color(60),
-                "intake(int)",
+                "Lift(int)",
                 xOff,
                 3,
             ),
             function () {
                 program.push([
                     cmdType["NonMvt"],
-                    `intake(${$("input.ProgInput.Num").val()});`,
+                    `Lift(${$("input.ProgInput.Num").val()});`,
                 ]);
-                addListEl(`intake(${$("input.ProgInput.Num").val()});`);
+                addListEl(`Lift(${$("input.ProgInput.Num").val()});`);
             },
         ], // launchDisks
+        [
+            new Button(
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "intake(bool)",
+                xOff,
+                3,
+            ),
+            function () {
+                program.push([
+                    cmdType["NonMvt"],
+                    `intake(${$("input.ProgInput.Bool").is(":checked")});`,
+                ]);
+                addListEl(
+                    `intake(${$("input.ProgInput.Bool").is(":checked")});`,
+                );
+            },
+        ],
+        [
+            new Button(
+                bankOff + getButtonX.next().value,
+                getButtonY.next().value,
+                w,
+                5,
+                p.color(0),
+                p.color(100),
+                p.color(80),
+                p.color(60),
+                "lift(bool)",
+                xOff,
+                3,
+            ),
+            function () {
+                program.push([
+                    cmdType["NonMvt"],
+                    `lift(${$("input.ProgInput.Bool").is(":checked")});`,
+                ]);
+                addListEl(`lift(${$("input.ProgInput.Bool").is(":checked")});`);
+            },
+        ],
     ];
 
     diskPos = [
@@ -305,4 +351,3 @@ var initVars = function () {
         );
     }
 };
-
